@@ -12,11 +12,8 @@ addons:
         - docker-ce
 
 env:
-    - DOCKER_CLI_EXPERIMENTAL=enabled
-    - IMAGE_NAME=patrickpissurno/rpi-docker-letsencrypt-dns
-    - REGISTRY_USER=patrickpissurno
-    # REGISTRY_PASS=...
-
+    - DOCKER_CLI_EXPERIMENTAL=enabled IMAGE_NAME=patrickpissurno/rpi-docker-letsencrypt-dns REGISTRY_USER=patrickpissurno # REGISTRY_PASS=...
+    
 before_script:
     - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
     - docker buildx create --use
@@ -24,4 +21,3 @@ before_script:
 script:
     - docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6 --tag "${IMAGE_NAME}:latest" --push .
 
-    
