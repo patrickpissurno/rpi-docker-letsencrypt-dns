@@ -21,6 +21,7 @@ before_script:
     - sudo usermod -aG docker $USER
     - sudo docker --version
     - sudo docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+    - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
     - sudo docker buildx create --use
     
 script:
