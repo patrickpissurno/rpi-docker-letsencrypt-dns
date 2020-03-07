@@ -14,10 +14,12 @@ env:
     - DOCKER_CLI_EXPERIMENTAL=enabled IMAGE_NAME=patrickpissurno/rpi-docker-letsencrypt-dns REGISTRY_USER=patrickpissurno # REGISTRY_PASS=...
     
 before_script:
-    - sudo apt update
-    - sudo apt upgrade
-    - sudo wget -O ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64
     - docker --version
+    - sudo apt update
+    - sudo apt upgrade -y
+    - docker --version
+    - wget -O docker-buildx https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64
+    - sudo mv docker-buildx ~/.docker/cli-plugins/docker-buildx
     - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
     - docker buildx create --use
     
