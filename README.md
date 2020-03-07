@@ -1,5 +1,5 @@
-# &nbsp;![](https://raw.githubusercontent.com/adferrand/docker-letsencrypt-dns/master/images/logo_from_realies_200px.png) adferrand/letsencrypt-dns
-![](https://img.shields.io/badge/tags-latest-lightgrey.svg) [![](https://images.microbadger.com/badges/version/adferrand/letsencrypt-dns:2.23.0.svg) ![](https://images.microbadger.com/badges/image/adferrand/letsencrypt-dns:2.23.0.svg)](https://microbadger.com/images/adferrand/letsencrypt-dns:2.23.0) [![CircleCI](https://circleci.com/gh/adferrand/docker-letsencrypt-dns/tree/master.svg?style=shield)](https://circleci.com/gh/adferrand/docker-letsencrypt-dns/tree/master)
+# &nbsp;![](https://raw.githubusercontent.com/adferrand/docker-letsencrypt-dns/master/images/logo_from_realies_200px.png) patrickpissurno/rpi-docker-letsencrypt-dns
+![](https://img.shields.io/badge/tags-latest-lightgrey.svg) [![](https://images.microbadger.com/badges/version/patrickpissurno/rpi-docker-letsencrypt-dns:2.23.0.svg) ![](https://images.microbadger.com/badges/image/patrickpissurno/rpi-docker-letsencrypt-dns:2.23.0.svg)](https://microbadger.com/images/patrickpissurno/rpi-docker-letsencrypt-dns:2.23.0) [![CircleCI](https://circleci.com/gh/adferrand/docker-letsencrypt-dns/tree/master.svg?style=shield)](https://circleci.com/gh/adferrand/docker-letsencrypt-dns/tree/master)
 
 * [Container functionalities](#container-functionalities)
 * [Why use this Docker](#why-use-this-docker-)
@@ -122,7 +122,7 @@ LEXICON_PROVIDER_OPTIONS=--auth-username=my_cloudflare_email --auth-token=my_clo
 Some providers (like OVH) need more specific environment variables. First, run following command to get the Lexicon help for this DNS provider:
 
 ```bash
-docker run -it --rm adferrand/letsencrypt-dns lexicon ovh --help
+docker run -it --rm patrickpissurno/rpi-docker-letsencrypt-dns lexicon ovh --help
 ```
 
 Once done, you will see authentication parameters of the form `--auth-somevar`. Theses parameters must be setted using environment variables of the form `LEXICON_[PROVIDER]_AUTH_SOMEVAR`.
@@ -171,7 +171,7 @@ docker run \
 	--env 'LEXICON_PROVIDER=cloudflare' \
 	--env 'LEXICON_CLOUDFLARE_AUTH_USERNAME=my_cloudflare_email' \
 	--env 'LEXICON_CLOUDFLARE_AUTH_TOKEN=my_cloudflare_global_api_key' \
-	adferrand/letsencrypt-dns
+	patrickpissurno/rpi-docker-letsencrypt-dns
 ```
 
 At start, the container will look to `domains.conf` and generate the certificates if needed. Then a cron task is launched twice a day to regenerate certificates if needed. The certificates are located in the container at `/etc/letsencrypt/live/`.
@@ -193,7 +193,7 @@ docker run \
 	--env 'LEXICON_PROVIDER=cloudflare' \
 	--env 'LEXICON_CLOUDFLARE_AUTH_USERNAME=my_cloudflare_email' \
 	--env 'LEXICON_CLOUDFLARE_AUTH_TOKEN=my_cloudflare_global_api_key' \
-	adferrand/letsencrypt-dns
+	patrickpissurno/rpi-docker-letsencrypt-dns
 ```
 
 ### Share certificates with other containers
@@ -209,7 +209,7 @@ docker run \
 	--env 'LEXICON_PROVIDER=cloudflare' \
 	--env 'LEXICON_CLOUDFLARE_AUTH_USERNAME=my_cloudflare_email' \
 	--env 'LEXICON_CLOUDFLARE_AUTH_TOKEN=my_cloudflare_global_api_key' \
-	adferrand/letsencrypt-dns
+	patrickpissurno/rpi-docker-letsencrypt-dns
 
 docker run \
 	--volumes-from letsencrypt-dns \
@@ -267,7 +267,7 @@ docker run \
 	--env 'LEXICON_PROVIDER=cloudflare' \
 	--env 'LEXICON_CLOUDFLARE_AUTH_USERNAME=my_cloudflare_email' \
 	--env 'LEXICON_CLOUDFLARE_AUTH_TOKEN=my_cloudflare_global_api_key' \
-	adferrand/letsencrypt-dns
+	patrickpissurno/rpi-docker-letsencrypt-dns
 
 docker run \
 	--name smtp \
@@ -336,7 +336,7 @@ docker run \
 	--env 'LEXICON_CLOUDFLARE_AUTH_USERNAME=my_cloudflare_email' \
 	--env 'LEXICON_CLOUDFLARE_AUTH_TOKEN=my_cloudflare_global_api_key' \
 	--env 'DEPLOY_HOOK=create-nginx-certs' \
-	adferrand/letsencrypt-dns
+	patrickpissurno/rpi-docker-letsencrypt-dns
 ```
 
 ### Run the container in a cluster environment
