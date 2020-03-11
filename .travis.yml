@@ -4,7 +4,7 @@ language: python
 python: "3.6"
 
 env:
-    - DOCKER_CLI_EXPERIMENTAL=enabled MY_VER="" ORIG_VER="" ORIG_NAME=adferrand/letsencrypt-dns IMAGE_NAME=patrickpissurno/rpi-docker-letsencrypt-dns REGISTRY_USER=patrickpissurno # REGISTRY_PASS=...
+    - DOCKER_CLI_EXPERIMENTAL=enabled ORIG_NAME=adferrand/letsencrypt-dns IMAGE_NAME=patrickpissurno/rpi-docker-letsencrypt-dns REGISTRY_USER=patrickpissurno # REGISTRY_PASS=...
     
 before_script:
     - sudo apt-get install manpages-posix
