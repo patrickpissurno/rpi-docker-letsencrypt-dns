@@ -4,9 +4,13 @@ language: python
 python: "3.6"
 
 env:
-    - DOCKER_CLI_EXPERIMENTAL=enabled IMAGE_NAME=patrickpissurno/rpi-docker-letsencrypt-dns REGISTRY_USER=patrickpissurno # REGISTRY_PASS=...
+    - DOCKER_CLI_EXPERIMENTAL=enabled MY_VER="" ORIG_VER="" ORIG_NAME=adferrand/letsencrypt-dns IMAGE_NAME=patrickpissurno/rpi-docker-letsencrypt-dns REGISTRY_USER=patrickpissurno # REGISTRY_PASS=...
     
 before_script:
+    - sudo apt-get install manpages-posix
+    - ORIG_VER="$(./get_latest.sh $ORIG_NAME)"
+    - MY_VER="$(./get_latest.sh $IMAGE_NAME)"
+    - if [ -n "$MY_VER" ] && [ "$MY_VER" = "$ORIG_VER" ]; then travis_terminate 0; fi
     - pip3 install travis-wait-improved
     - curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
     - docker --version
