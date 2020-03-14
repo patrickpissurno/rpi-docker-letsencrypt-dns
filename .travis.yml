@@ -13,7 +13,7 @@ before_script:
       for i in $ORIG_VER2; do [ "$i" != "latest" ] && ORIG_VER="$i"; done
       MY_VER2="$(wget -q https://registry.hub.docker.com/v1/repositories/$IMAGE_NAME/tags -O -  | sed -e 's/[][]//g' -e 's/"//g' -e 's/ //g' | tr '}' '\n'  | awk -F: '{print $3}' | sort -V | tail -n2)"
       for i in $MY_VER2; do [ "$i" != "latest" ] && MY_VER="$i"; done
-      echo "$ORIG_NAME Version $VER"
+      echo "$ORIG_NAME Version $ORIG_VER"
       echo "$IMAGE_NAME Version $MY_VER"
       if [ -z "$NOW" ] && [ -n "$MY_VER" ] && [ "$MY_VER" = "$ORIG_VER" ]; then travis_terminate 0; fi
     - pip3 install travis-wait-improved
