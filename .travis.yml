@@ -1,7 +1,6 @@
 os: linux
 dist: bionic
-language: python
-python: "3.6"
+language: minimal
 
 env:
     - DOCKER_CLI_EXPERIMENTAL=enabled ORIG_NAME=adferrand/letsencrypt-dns IMAGE_NAME=patrickpissurno/rpi-docker-letsencrypt-dns REGISTRY_USER=patrickpissurno # REGISTRY_PASS=...
@@ -16,7 +15,6 @@ before_script:
       echo "$ORIG_NAME Version $ORIG_VER"
       echo "$IMAGE_NAME Version $MY_VER"
       if [ -z "$NOW" ] && [ -n "$MY_VER" ] && [ "$MY_VER" = "$ORIG_VER" ]; then travis_terminate 0; fi
-    - pip3 install travis-wait-improved
     - curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
     - docker --version
     - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
@@ -26,5 +24,7 @@ before_script:
     
 script:
     - git clone https://github.com/adferrand/docker-letsencrypt-dns.git build && cd build
+    - patch -i ../10-use-py3-packages.patch
+    - sed -i s+/usr/local/bin/circusd+/usr/bin/circusd+g files/run.sh
     - if [ -f VERSION ]; then TAG="--tag $IMAGE_NAME:$(cat VERSION)"; fi
-    - travis-wait-improved --timeout 240m docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 $TAG --tag "${IMAGE_NAME}" --push .
+    - docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 $TAG --tag "${IMAGE_NAME}" --push .

@@ -1,0 +1,21 @@
+--- Dockerfile.orig	2020-03-15 07:02:46.990775011 +0000
++++ Dockerfile	2020-03-15 07:01:46.927116740 +0000
+@@ -1,4 +1,4 @@
+-FROM python:3.8.1-alpine3.11
++FROM alpine:3.11
+ LABEL maintainer="Adrien Ferrand <ferrand.ad@gmail.com>"
+ 
+ # Scripts in /scripts are required to be in the PATH to run properly as certbot's hooks
+@@ -9,9 +9,9 @@ ENV LEXICON_VERSION 3.3.17
+ ENV CERTBOT_VERSION 1.3.0
+ 
+ # Install dependencies, certbot, lexicon, prepare for first start and clean
+-RUN apk --no-cache --update add rsyslog git libffi libxml2 libxslt libstdc++ openssl docker ethtool tzdata bash bind-tools \
+- && apk --no-cache --update --virtual build-dependencies add libffi-dev libxml2-dev libxslt-dev openssl-dev build-base linux-headers \
+- && pip install --no-cache-dir "certbot==$CERTBOT_VERSION" \
++RUN sed -i -e 's/v[[:digit:]]\..*\//edge\//g' /etc/apk/repositories \
++ && apk --no-cache add syslog-ng git libxml2 libxslt libstdc++ openssl docker ethtool tzdata bash bind-tools certbot py3-requests py3-future py3-pip py3-lxml py3-pyzmq py3-psutil \
++ && apk --no-cache --virtual build-dependencies add  build-base python3-dev \
+  && pip install --no-cache-dir "dns-lexicon[full]==$LEXICON_VERSION" \
+  && pip install --no-cache-dir circus \
+  && mkdir -p /var/letsencrypt \
