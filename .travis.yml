@@ -26,5 +26,5 @@ script:
     - git clone https://github.com/adferrand/docker-letsencrypt-dns.git build && cd build
     - patch -i ../10-use-py3-packages.patch
     - sed -i s+/usr/local/bin/circusd+/usr/bin/circusd+g files/run.sh
-    - if [ -f VERSION ]; then TAG="--tag $IMAGE_NAME:$(cat VERSION)"; fi
+    - if [ -n "$ORIG_VER" ]; then TAG="--tag $IMAGE_NAME:$ORIG_VER"
     - docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 $TAG --tag "${IMAGE_NAME}" --push .
